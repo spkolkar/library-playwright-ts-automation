@@ -12,8 +12,8 @@ export class LoginPage extends BasePage {
     this.passwordInput = page.getByRole('textbox', { name: 'Enter your password' });
     this.loginButton = page.getByRole('button', { name: 'Submit login' });
   }
-  async goto() {
-    await this.page.goto('/');
+  async goto(BASE_URL: string) {
+    await this.page.goto(BASE_URL);
   } 
   async login(username: string, password:string) {
     await this.usernameInput.fill(username);
