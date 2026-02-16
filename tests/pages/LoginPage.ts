@@ -1,44 +1,36 @@
-// import { Page, Locator } from "@playwright/test";  
-// import { BasePage } from "./BasePage";
-
-// export class LoginPage extends BasePage {
-//   static goto(BASE_URL: string | undefined) {
-//     throw new Error('Method not implemented.');
-//   }
-//   readonly usernameInput: Locator;
-//   readonly passwordInput: Locator;
-//   readonly loginButton: Locator;
-
-//   constructor(page: Page) {
-//     super(page);
-//     this.usernameInput = page.getByRole('textbox', { name: 'Enter your username' });
-//     this.passwordInput = page.getByRole('textbox', { name: 'Enter your password' });
-//     this.loginButton = page.getByRole('button', { name: 'Submit login' });
-//   }
-//   async goto(BASE_URL: string) {
-//     await this.page.goto(BASE_URL);
-//   } 
-//   async login(username: string, password:string) {
-//     await this.usernameInput.fill(username);
-//     await this.passwordInput.fill(password);
-//     await this.loginButton.click();
-//   }
-// }
-
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class LoginPage extends BasePage {
-  static async goto(page: Page, BASE_URL?: string) {
-    const target = BASE_URL ?? process.env.BASE_URL ?? '';
-    await page.goto(target);
-  }
+  public usernameInput: Locator;
+  public passwordInput: Locator;
+  public loginButton: Locator;
+
   constructor(page: Page) {
     super(page);
+    this.usernameInput = this.page.getByRole('textbox', { name: 'Enter your username' });
+    this.passwordInput = this.page.getByRole('textbox', { name: 'Enter your password' });
+    this.loginButton = this.page.getByRole('button', { name: 'Submit login' });
   }
-
- public async goto(BASE_URL: string) {
-    await this.page.goto(BASE_URL);
+/**
+ * 
+ * @param url : pass the url to which user wants to navigate
+ */
+  public async goto(url: string) {
+    await this.page.goto(url);
   }
-  
+/**
+ * 
+ * @param username : pass the valid  user name
+ * @param password : pass the valid password
+ */
+  public async login(username: string, password: string) {
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    
+  //Take screenshot of login screen
+  await this.page.screenshot({ path: 'screenshots/LoginPageFilled.png' , fullPage: true });
+    await this.loginButton.click();
+    await this.page.waitForLoadState('networkidle');
+  }
 }

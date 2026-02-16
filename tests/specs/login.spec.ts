@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
+import { log } from 'node:console';
 
 
 test.describe('Library System Tests', () => {
@@ -8,26 +9,28 @@ test.describe('Library System Tests', () => {
 test('Valid Login Test', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const baseUrl = process.env.BASE_URL;
-  const username = process.env.USERNAME;
+  const username = process.env.USER_NAME;
   const password = process.env.PASSWORD;
+  console.log("Name",username);
+  console.log("password",password);
+
   if (!baseUrl || !username || !password) {
     throw new Error('Missing BASE_URL, USERNAME or PASSWORD in environment variables');
   }
-  // await loginPage.goto(baseUrl);
-  // await loginPage.login(username, password);
 
-  // await expect(page).toHaveURL('books');
-  // await page.goto('https://frontendui-librarysystem.onrender.com/');
-  // await page.getByRole('button', { name: 'Start Testing' }).click();
-  // await page.goto('https://frontendui-librarysystem.onrender.com/login');
+  const loginUrl = `${baseUrl.replace(/\/$/, '')}/login`;
+  console.log(`Navigating to ${loginUrl}`);
+  await loginPage.goto(loginUrl);
 
-  // await page.getByTestId('login-heading').isVisible();
+  await expect(loginPage.usernameInput).toBeVisible();
+  await expect(loginPage.passwordInput).toBeVisible();
+  await expect(loginPage.loginButton).toBeVisible();
+ 
+  await loginPage.login(username, password);
 
-  // await page.getByRole('textbox', { name: 'Enter your username' }).click();
-  // await page.getByRole('textbox', { name: 'Enter your username' }).fill('admin');
-  // await page.getByRole('textbox', { name: 'Enter your password' }).fill('admin');
-  // await page.getByRole('button', { name: 'Submit login' }).click();
-
+  // after login we should no longer be on the /login page
+  // await expect(page).not.toHaveURL(/\/login$/);
+ 
 });
   
 });

@@ -1,6 +1,6 @@
 export const testUsers = {
   admin: {
-    username: process.env.USERNAME,
+    username: process.env.USER_NAME,
     password: process.env.PASSWORD
 },
 invalid:{
@@ -11,11 +11,11 @@ invalid:{
 
 export const testBooks = {
   validBook: {
-    title: 'mybook',
+    title: 'AI the next',
     author :'Shivakumar',
-    year: '2022',
+    year: '2022-01-10',
     genre: 'Fiction',
-    isbn: '1234567890', 
+    isbn: '9780694009090', 
     price: '25.99'
   },
   updatedBook: {
