@@ -15,7 +15,7 @@ async function findBookRowByTitle(page: Page, title: string): Promise<Locator> {
   throw new Error(`Book with title '${title}' not found.`);
 }
 import { LoginPage } from '../pages/LoginPage';
-import { testBooks } from '../fixtures/testData';
+import { testBooks } from '../helpers/testData';
 
 
 test.describe('Library System - Adding Book', () => {
@@ -60,7 +60,7 @@ test('Add Valid Book Test', async ({ page }) => {
   await page.screenshot({ path: 'screenshots/BooksListwithNewlyAddedBookScreen.png' , fullPage: true });
 
       // Test: Search for the added book, edit price, and verify
-      test('Search and Edit Book Price', async ({ page }) => {
+      test('Search and Edit Book Price', async ({ page, booksPageSteps }) => {
         // const loginPage = new LoginPage(page);
         // const baseUrl = process.env.BASE_URL;
         // const username = process.env.USER_NAME;
