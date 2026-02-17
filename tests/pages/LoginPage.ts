@@ -29,16 +29,11 @@ export class LoginPage {
 
   }
 
-  public async goto(): Promise<void> {
-    const baseUrl = process.env.BASE_URL;
-    if (!baseUrl) {
-      throw new Error('BASE_URL environment variable is not defined');
-    }
+  public async goto(baseUrl: string): Promise<void> {
+    
     //login page url should be baseUrl + /login
     const loginUrl = `${baseUrl.replace(/\/$/, '')}/login`;
     log(`Navigating to login URL: ${loginUrl}`, LogType.INFO);
-    // console.log(`Navigating to ${loginUrl}`);
-
     await this.page.goto(loginUrl);
   }
 

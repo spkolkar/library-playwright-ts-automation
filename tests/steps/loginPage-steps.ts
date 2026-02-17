@@ -16,7 +16,7 @@ export class LoginPageSteps {
   }
 
   public async navigateToLoginPage(): Promise<void> {
-    await this.loginPage.goto();
+    await this.loginPage.goto(process.env.BASE_URL!);
   }
 
   public async validateLoginPageUI(): Promise<void> {
