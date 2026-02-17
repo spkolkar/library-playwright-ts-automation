@@ -1,4 +1,5 @@
-import { Page, Locator,expect } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
+import { log, LogType } from '../helpers/logger';
 export class LoginPage {
   readonly page: Page;
 
@@ -12,7 +13,7 @@ export class LoginPage {
   //Locator - login button
   readonly loginButton: Locator;
 
-constructor(page: Page) {
+  constructor(page: Page) {
     this.page = page;
 
     // Header
@@ -23,7 +24,9 @@ constructor(page: Page) {
     this.passwordLabel = page.locator('label[for="password"]');
 
     // Button
-    this.loginButton = page.getByRole('button', { name: 'Login' });
+    this.loginButton = page.getByRole('button', { name: 'Submit Login' });
+    // this.loginButton = page.getByRole('button', { name: /log/i });
+
   }
 
   public async goto(): Promise<void> {
@@ -33,7 +36,8 @@ constructor(page: Page) {
     }
     //login page url should be baseUrl + /login
     const loginUrl = `${baseUrl.replace(/\/$/, '')}/login`;
-    console.log(`Navigating to ${loginUrl}`);
+    log(`Navigating to login URL: ${loginUrl}`, LogType.INFO);
+    // console.log(`Navigating to ${loginUrl}`);
 
     await this.page.goto(loginUrl);
   }
@@ -41,7 +45,7 @@ constructor(page: Page) {
   public async validateLoginHeader(expectedText: string): Promise<void> {
     await expect(this.loginHeader).toHaveText(expectedText);
   }
-  
+
   public async validateUsernameLabel(expectedText: string): Promise<void> {
     await expect(this.usernameLabel).toHaveText(expectedText);
   }
@@ -51,7 +55,8 @@ constructor(page: Page) {
   }
 
   public async validateLoginButtonName(expectedText: string): Promise<void> {
-    await expect(this.loginButton).toHaveText(expectedText);
+    const buttonText = await this.loginButton.innerText();
+    await expect(buttonText).toBe(expectedText);
   }
 
   public async enterUsername(username: string): Promise<void> {

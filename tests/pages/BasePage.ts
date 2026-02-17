@@ -7,11 +7,11 @@ export class BasePage {
     this.page = page;
   }
 
-  async navigateTo(url: string) {
+  public async navigateTo(url: string) {
     await this.page.goto(url);
   }
 
-  async waitForNetworkIdle() {
+  public async waitForNetworkIdle() {
     await this.page.waitForLoadState('networkidle');
   }
 
