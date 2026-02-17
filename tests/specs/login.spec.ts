@@ -1,39 +1,57 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { log } from 'node:console';
+import { LoginPageSteps } from '../steps/loginPage-steps';
+ const username: string| undefined = process.env.USER_NAME;
+ const password : string| undefined = process.env.PASSWORD;
+//  
 
+test.describe('Login Page Tests', () => {
+  test('Validate login page displayed labels ', async ({ page }) => {
+    const loginSteps = new LoginPageSteps(page);
 
-test.describe('Library System Tests', () => {
-  
-  
-test('Valid Login Test', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  const baseUrl = process.env.BASE_URL;
-  const username = process.env.USER_NAME;
-  const password = process.env.PASSWORD;
-  console.log("Name",username);
-  console.log("password",password);
+    await loginSteps.navigateToLoginPage();
+    await loginSteps.validateLoginLabels();
+  });
 
-  if (!baseUrl || !username || !password) {
-    throw new Error('Missing BASE_URL, USERNAME or PASSWORD in environment variables');
-  }
+  // test('Admin user login test', async ({ page }) => {
+  //   const loginSteps = new LoginPageSteps(page);
 
-  const loginUrl = `${baseUrl.replace(/\/$/, '')}/login`;
-  console.log(`Navigating to ${loginUrl}`);
-  await loginPage.goto(loginUrl);
-
-  await expect(loginPage.usernameInput).toBeVisible();
-  await expect(loginPage.passwordInput).toBeVisible();
-  await expect(loginPage.loginButton).toBeVisible();
- 
-  await loginPage.login(username, password);
-
-  // after login we should no longer be on the /login page
-  // await expect(page).not.toHaveURL(/\/login$/);
- 
+  //   await loginSteps.navigateToLoginPage();
+  //   await loginSteps.loginWithCredentials(username!, password!
+  //   );
+  // });
 });
+
+// test.describe('Library System Tests', () => {
   
-});
+  
+// test('Valid Login Test', async ({ page }) => {
+//   const loginPage = new LoginPage(page);
+//   const baseUrl = process.env.BASE_URL;
+//   const username = process.env.USER_NAME;
+//   const password = process.env.PASSWORD;
+//   // console.log("Name",username);
+//   // console.log("password",password);
+
+//   if (!baseUrl || !username || !password) {
+//     throw new Error('Missing BASE_URL, USERNAME or PASSWORD in environment variables');
+//   }
+
+//   const loginUrl = `${baseUrl.replace(/\/$/, '')}/login`;
+//   console.log(`Navigating to ${loginUrl}`);
+//   await loginPage.goto(loginUrl);
+
+//   await expect(loginPage.usernameInput).toBeVisible();
+//   await expect(loginPage.passwordInput).toBeVisible();
+//   await expect(loginPage.loginButton).toBeVisible();
+ 
+//   await loginPage.login(username, password);
+
+//   // after login we should no longer be on the /login page
+//   // await expect(page).not.toHaveURL(/\/login$/);
+ 
+// });
+  
+// });
 
 
 

@@ -27,3 +27,9 @@ export const testBooks = {
     price: '30.99'
   }
 };
+
+  export const loginPageLabelNames = {
+  usernameLabel: 'Username',
+  passwordLabel: 'Password',
+  loginHeader: 'Login'  
+  };
