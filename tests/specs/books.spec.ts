@@ -162,6 +162,7 @@ import { LoginPageSteps } from '../steps/loginPage-steps';
 import { BooksPageSteps } from '../steps/booksPage-steps';
 import { test } from '@playwright/test';
 import { BasePage } from '../pages/BasePage';
+import { testBooks } from '../helpers/testData';
 const username: string | undefined = process.env.USER_NAME;
 const password: string | undefined = process.env.PASSWORD;
 
@@ -179,11 +180,11 @@ test.describe('Books Management', () => {
     await booksSteps.navigateToBooksPage();
     // await booksSteps.openAddBookForm();
 
-    await booksSteps.addBook('Atomic Habits', 'James Clear', 'Fiction', '1234567890', '2020-01-01', '19.99');
+    await booksSteps.addBook(testBooks.validBook.title, testBooks.validBook.author, testBooks.validBook.genre, testBooks.validBook.isbn, testBooks.validBook.publicationDate, testBooks.validBook.price);
 
-    // await booksSteps.editBook('Atomic Habits', 'Atomic Habits Updated');
+    // await booksSteps.editBook(testBooks.validBook.title, testBooks.updatedBook.title);
 
-    // await booksSteps.deleteBook('Atomic Habits Updated');
+    await booksSteps.deleteBook(testBooks.validBook.title);
   });
 
 });

@@ -36,8 +36,8 @@ export class BooksPageSteps {
   }
 
   public async openAddBookForm(): Promise<void> {
-  await this.booksPage.clickAddBook();
-}
+    await this.booksPage.clickAddBook();
+  }
 
 
   /**
@@ -54,7 +54,7 @@ export class BooksPageSteps {
     await this.booksPage.clickSave();
     await this.booksPage.takeScreenshot('BookedAddFilledFormScreen');
     await this.booksPage.validateBookExists(testBooks.validBook.title);
-      await this.booksPage.takeScreenshot('BookedAddedExistsScreen');
+    await this.booksPage.takeScreenshot('BookedAddedExistsScreen');
   }
 
   /*
@@ -62,9 +62,14 @@ export class BooksPageSteps {
    */
   public async editBook(oldTitle: string, newTitle: string): Promise<void> {
     await this.booksPage.clickEditForBook(oldTitle);
+    // await this.booksPage.validateHeader('Edit book details', 2);
+    // await this.booksPage.takeScreenshot('BookSearchOpenedforEditScreen');
+    await this.booksPage.enterPrice('87.99');
     await this.booksPage.enterTitle(newTitle);
+    await this.booksPage.takeScreenshot('BookEditedWithNewTitleScreen');
     await this.booksPage.clickSave();
     await this.booksPage.validateBookExists(newTitle);
+    await this.booksPage.takeScreenshot('BookUpdatedIntheBooksListScreen');
   }
 
   /**
@@ -72,6 +77,11 @@ export class BooksPageSteps {
    */
   public async deleteBook(title: string): Promise<void> {
     await this.booksPage.clickDeleteForBook(title);
-    await this.booksPage.validateBookDeleted(title);
+    await this.booksPage.validateBookNotExists(title);
   }
+
+  // public async verifyBooksPageLoaded(): Promise<void> {
+  //   await this.booksPage.validateHeader('Books', 1);
+  //   // Change level to 2 if your header is <h2>
+  // }
 }

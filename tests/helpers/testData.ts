@@ -19,7 +19,7 @@ export const testBooks = {
     price: '25.99'
   },
   updatedBook: {
-    title: 'updatedBook',
+    title: 'AI genesis',
     author: 'Shivakumar',
     year: '2022',
     genre: 'Fiction',
