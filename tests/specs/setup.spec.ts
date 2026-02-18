@@ -5,10 +5,10 @@ import { LoginPage } from "../pages/LoginPage";
 
 setup("Setup test for the Login Page", async ({ page }) => {
   const baseUrl = process.env.BASE_URL;
-   if (!baseUrl) {
-      throw new Error('BASE_URL environment variable is not defined');
-    }
-   
+  if (!baseUrl) {
+    throw new Error('BASE_URL environment variable is not defined');
+  }
+
   log(`Base URL from environment variable: ${baseUrl}`, LogType.INFO);
   await new LoginPage(page).goto(baseUrl);
 

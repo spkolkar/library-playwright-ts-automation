@@ -30,7 +30,7 @@ export class LoginPage {
   }
 
   public async goto(baseUrl: string): Promise<void> {
-    
+
     //login page url should be baseUrl + /login
     const loginUrl = `${baseUrl.replace(/\/$/, '')}/login`;
     log(`Navigating to login URL: ${loginUrl}`, LogType.INFO);
