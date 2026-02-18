@@ -18,6 +18,8 @@
 
 import { Page } from '@playwright/test';
 import { BooksPage } from '../pages/BooksPage';
+import { testBooks } from '../helpers/testData';
+import test from 'node:test';
 
 export class BooksPageSteps {
   private booksPage: BooksPage;
@@ -43,17 +45,19 @@ export class BooksPageSteps {
    */
   public async addBook(title: string, author: string, genre: string, isbn: string, publicationDate: string, price: string): Promise<void> {
     await this.booksPage.clickAddBook();
-    await this.booksPage.enterTitle(title);
-    await this.booksPage.enterAuthor(author);
-    await this.booksPage.selectGenre(genre);
-    await this.booksPage.enterIsbn(isbn);
-    await this.booksPage.enterPublicationDate(publicationDate);
-    await this.booksPage.enterPrice(price);
+    await this.booksPage.enterTitle(testBooks.validBook.title);
+    await this.booksPage.enterAuthor(testBooks.validBook.author);
+    await this.booksPage.selectGenre(testBooks.validBook.genre);
+    await this.booksPage.enterIsbn(testBooks.validBook.isbn);
+    await this.booksPage.enterPublicationDate(testBooks.validBook.publicationDate);
+    await this.booksPage.enterPrice(testBooks.validBook.price);
     await this.booksPage.clickSave();
-    await this.booksPage.validateBookExists(title);
+    await this.booksPage.takeScreenshot('BookedAddFilledFormScreen');
+    await this.booksPage.validateBookExists(testBooks.validBook.title);
+      await this.booksPage.takeScreenshot('BookedAddedExistsScreen');
   }
 
-  /**
+  /*
    * Edit existing book
    */
   public async editBook(oldTitle: string, newTitle: string): Promise<void> {

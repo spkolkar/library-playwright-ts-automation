@@ -13,7 +13,7 @@ export const testBooks = {
   validBook: {
     title: 'AI the next',
     author: 'Shivakumar',
-    year: '2022-01-10',
+    publicationDate: '2022-01-10',
     genre: 'Fiction',
     isbn: '9780694009090',
     price: '25.99'
