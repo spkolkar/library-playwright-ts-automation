@@ -1,7 +1,6 @@
 import { LoginPageSteps } from '../steps/loginPage-steps';
 import { BooksPageSteps } from '../steps/booksPage-steps';
 import { test } from '@playwright/test';
-import { BasePage } from '../pages/BasePage';
 import { testBooks } from '../helpers/testData';
 const username: string | undefined = process.env.USER_NAME;
 const password: string | undefined = process.env.PASSWORD;
@@ -27,5 +26,6 @@ test.describe('Books Management', () => {
     //Delete the existing book in the Books List
     await booksSteps.deleteBook(testBooks.validBook.title);
   });
+
 
 });

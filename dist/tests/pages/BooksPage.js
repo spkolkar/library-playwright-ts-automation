@@ -15,7 +15,6 @@ class BooksPage extends BasePage_1.BasePage {
     }
     async goto(baseUrl) {
         const cleanBaseUrl = baseUrl.replace(/\/$/, '');
-        console.log(`Cleaned Base URL: ${cleanBaseUrl}`);
         const booksUrl = `${cleanBaseUrl}/books`;
         (0, logger_1.log)(`Navigating to Books URL to add books: ${booksUrl}`, logger_1.LogType.INFO);
         await this.page.goto(booksUrl);

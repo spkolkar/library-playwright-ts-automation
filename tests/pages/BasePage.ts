@@ -2,9 +2,6 @@ import { Page, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Locator } from '@playwright/test';
-import { BooksPage } from '../pages/BooksPage';
-import { testBooks } from '../helpers/testData';
-import { log, LogType } from '../helpers/logger';
 
 export class BasePage {
   page: Page;
@@ -43,7 +40,7 @@ export class BasePage {
 
     const filePath = path.join(
       screenshotsDir,
-      `${fileName}-${Date.now()}.png`
+      `${fileName}_${Date.now()}.png`
     );
 
     await this.page.screenshot({
@@ -85,5 +82,21 @@ export class BasePage {
     return row;
   }
 
+  /**
+   * Generic header validation function
+   * @param expectedText - Expected heading text
+   * @param level - Heading level (1 = h1, 2 = h2, etc.)
+   */
+  public async validateHeader(
+    expectedText: string,
+    level: number = 1
+  ): Promise<void> {
 
+    const header = this.page.getByRole('heading', {
+      name: expectedText,
+      level
+    });
+
+    await expect(header).toBeVisible({ timeout: 10000 });
+  }
 }

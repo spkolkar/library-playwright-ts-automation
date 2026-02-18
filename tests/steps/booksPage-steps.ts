@@ -1,21 +1,3 @@
-// import { BooksPage } from "../pages/BooksPage";
-// import {Page} from '@playwright/test';
-
-// export class BooksPageSteps{
-//   booksPage: BooksPage;
-//   constructor(page: Page){
-//     this.booksPage = new BooksPage(page);
-//   }
-
-//   public validateBookTitleInList = async (title: string) => {
-//     const bookTitleLocator = this.booksPage.page.locator(`.book-item:has-text("${title}") .book-title`);
-//     const count = await bookTitleLocator.count();
-//     if (count === 0) {
-//       throw new Error(`Book with title '${title}' not found.`);
-//     }
-//   }
-// }
-
 import { Page } from '@playwright/test';
 import { BooksPage } from '../pages/BooksPage';
 import { testBooks } from '../helpers/testData';
@@ -51,8 +33,8 @@ export class BooksPageSteps {
     await this.booksPage.enterIsbn(testBooks.validBook.isbn);
     await this.booksPage.enterPublicationDate(testBooks.validBook.publicationDate);
     await this.booksPage.enterPrice(testBooks.validBook.price);
-    await this.booksPage.clickSave();
     await this.booksPage.takeScreenshot('BookedAddFilledFormScreen');
+    await this.booksPage.clickSave();
     await this.booksPage.validateBookExists(testBooks.validBook.title);
     await this.booksPage.takeScreenshot('BookedAddedExistsScreen');
   }
@@ -61,15 +43,15 @@ export class BooksPageSteps {
    * Edit existing book
    */
   public async editBook(oldTitle: string, newTitle: string): Promise<void> {
+    //click on Edit button for the specific book
     await this.booksPage.clickEditForBook(oldTitle);
-    // await this.booksPage.validateHeader('Edit book details', 2);
-    // await this.booksPage.takeScreenshot('BookSearchOpenedforEditScreen');
-    await this.booksPage.enterPrice('87.99');
+    await this.booksPage.validateHeader('Edit book details', 1);
+    await this.booksPage.takeScreenshot('BookSearchOpenedforEditScreen');
     await this.booksPage.enterTitle(newTitle);
     await this.booksPage.takeScreenshot('BookEditedWithNewTitleScreen');
     await this.booksPage.clickSave();
     await this.booksPage.validateBookExists(newTitle);
-    await this.booksPage.takeScreenshot('BookUpdatedIntheBooksListScreen');
+    await this.booksPage.takeScreenshot('BookEditUpdatedIntheBooksListScreen');
   }
 
   /**
@@ -77,11 +59,11 @@ export class BooksPageSteps {
    */
   public async deleteBook(title: string): Promise<void> {
     await this.booksPage.clickDeleteForBook(title);
+     await this.booksPage.takeScreenshot('BookDeletedFromTheBookListScreen');
     await this.booksPage.validateBookNotExists(title);
   }
 
-  // public async verifyBooksPageLoaded(): Promise<void> {
-  //   await this.booksPage.validateHeader('Books', 1);
-  //   // Change level to 2 if your header is <h2>
-  // }
+  public async verifyBooksPageLoaded(): Promise<void> {
+    await this.booksPage.validateHeader('Books', 1);
+  }
 }

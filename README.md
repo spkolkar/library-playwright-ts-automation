@@ -1,206 +1,107 @@
-# 📚 Library System – Playwright Automation Framework
+Book Management – Playwright Automation
+This project contains automated UI tests for a Book Management web application using Playwright + TypeScript.
+The goal of this project is to demonstrate a clean, scalable automation framework using:
+    • Page Object Model (POM)
+    • Step Layer abstraction
+    • Reusable BasePage utilities
+    • Stable locator strategy
+    • Clean test structure
 
-End-to-end UI automation framework built using **Playwright + TypeScript**.
 
-This project automates and validates the Login page of:
+🧱 Project Structure
 
-[https://frontendui-librarysystem.onrender.com/login]
-
----
-
-# 🚀 Tech Stack
-
-* Playwright
-* TypeScript
-* Node.js
-* Page Object Model (POM)
-* Layered Test Architecture (Specs → Steps → Pages)
-
----
-
-# 📁 Project Structure
-
-```
 tests/
 │
-├── pages/
-│   └── LoginPage.ts        # UI locators and detailed implementations
+├── pages/        → Page Object classes
+├── steps/        → Business logic layer
+├── specs/        → Test cases
 │
-├── steps/
-│   └── loginPageSteps.ts   # Business-level reusable flows
-│
-└── specs/
-    └── login.spec
-```
-# 📚 Library System – Playwright Automation Framework
+├── BasePage.ts   → Common reusable methods
+└── playwright.config.ts
 
-End-to-end UI automation framework built using **Playwright + TypeScript**.
+Architecture Overview
+    • Specs contain test scenarios only
+    • Steps contain test flow logic
+    • Pages contain UI interaction methods
+    • BasePage contains reusable helpers (header validation, row search, etc.)
+This keeps the tests readable and easy to maintain.
 
-This project automates and validates the Login page of:
 
-[https://frontendui-librarysystem.onrender.com/login](https://frontendui-librarysystem.onrender.com/login)
+🚀 Technologies Used
+    • Playwright
+    • TypeScript
+    • Node.js
 
----
 
-# 🚀 Tech Stack
+⚙️ Installation
+Clone the repository:
 
-* Playwright
-* TypeScript
-* Node.js
-* Page Object Model (POM)
-* Layered Test Architecture (Specs → Steps → Pages)
+git clone <your-repo-url>
+cd book-management-tests
+Install dependencies:
 
----
-
-# 📁 Project Structure
-
-```
-tests/
-│
-├── pages/
-│   └── LoginPage.ts        # UI locators and detailed implementations
-│
-├── steps/
-│   └── loginPageSteps.ts   # Business-level reusable flows
-│
-└── specs/
-    └── login.spec.ts       # Test definitions
-```
-
----
-
-# 🏗 Architecture Overview
-
-This framework follows a clean 3-layer separation of concerns:
-
-## 1️⃣ Specs Layer (`specs/`)
-
-* Defines what is being tested
-* Contains test scenarios only
-* No UI logic
-
-## 2️⃣ Steps Layer (`steps/`)
-
-* Business-level reusable flows
-* Combines multiple page actions
-* Improves readability and scalability
-
-## 3️⃣ Pages Layer (`pages/`)
-
-* UI element locators
-* DOM interactions
-* Assertions
-* No business logic
-
----
-
-# ✅ Automated Test Coverage
-
-### Login Page UI Validation
-
-* Validate Login header text
-* Validate Username label text
-* Validate Password label text
-* Validate Login button text
-
-### Login Functionality
-
-* Enter username
-* Enter password
-* Click Login button
-
----
-
-# 🔎 Selector Strategy
-
-This framework follows Playwright best practices:
-
-| Element | Strategy Used          |
-| ------- | ---------------------- |
-| Header  | `getByRole('heading')` |
-| Labels  | `label[for="id"]`      |
-| Inputs  | `#id`                  |
-| Buttons | `getByRole('button')`  |
-
-### Why?
-
-* Stable selectors
-* Accessibility-aligned
-* Not dependent on CSS classes
-* Resistant to UI styling changes
-
----
-
-# ⚙️ Setup Instructions
-
-## 1️⃣ Install dependencies
-
-```bash
 npm install
-```
+Install Playwright browsers:
 
-## 2️⃣ Install Playwright browsers
-
-```bash
 npx playwright install
-```
 
-## 3️⃣ Run all tests
+▶️ Running Tests
+Run all tests:
 
-```bash
 npx playwright test
-```
+Run in headed mode:
 
-## 4️⃣ Run tests in headed mode
-
-```bash
 npx playwright test --headed
-```
+Run in debug mode:
 
-## 5️⃣ Open HTML report
+npx playwright test --debug
+Open HTML report:
 
-```bash
 npx playwright show-report
-```
 
----
+🧪 Test Coverage
+Currently implemented scenarios:
+    • ✅ Add new book
+    • ✅ Edit existing book
+    • ✅ Validate header visibility
+    • ✅ Row search and interaction
+    • ⏳ Delete book (optional / future enhancement)
 
-# 🧪 Example Test
+🏗 Design Decisions
+1️⃣ ID-Based Locators
+Where possible, input fields use unique IDs for stable and reliable selectors.
+Example:
 
-```ts
-test('Validate Login Page UI Elements', async ({ page }) => {
-  const loginSteps = new LoginPageSteps(page);
+this.page.locator('#title')
+This avoids brittle text-based selectors.
 
-  await loginSteps.navigateToLoginPage();
-  await loginSteps.validateLoginPageUI();
+2️⃣ Separation of Concerns
+Instead of writing UI actions directly inside tests:
+    • Tests describe what
+    • Pages implement how
+This keeps the test cases clean and readable.
+
+3️⃣ Explicit Page Validation
+Before interacting with forms, the framework validates that the correct page header is visible.
+This prevents flaky timing issues during navigation.
+
+📌 Example Test
+
+test('Edit existing book successfully', async ({ page }) => {
+  const booksSteps = new BooksPageSteps(page);
+await page.goto('http://localhost:3000/books');
+await booksSteps.editBookFlow(
+    'Atomic Habits',
+    'Atomic Habits - Updated',
+    '35.99'
+  );
 });
-```
 
----
+🔮 Future Improvements
+Possible enhancements:
+    • Data-driven testing
+    • API mocking
+    • CI/CD integration (GitHub Actions)
+    • Environment configuration support
+    • Dockerized test execution
 
-# 🎯 Design Principles
-
-* Clean separation of concerns
-* Reusable business logic
-* Stable selector strategy
-* Auto-wait assertions using `toHaveText`
-* Scalable architecture for enterprise projects
-
----
-
-# 🔮 Future Improvements
-
-* BasePage abstraction layer
-* Environment-based configuration
-* Custom Playwright fixtures
-* Negative login test cases
-* API + UI hybrid testing
-* CI/CD integration (GitHub Actions)
-* Docker support
-* Advanced reporting (Allure)
-
----
-
-# 👨‍💻 Author
-
-Automation framework built with Playwright and TypeScript using scalable enterprise design principles.
