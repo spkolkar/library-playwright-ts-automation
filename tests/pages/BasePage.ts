@@ -1,16 +1,3 @@
-/**
- * Navigate to a URL with custom options (waitUntil: 'domcontentloaded', timeout: 180000)
- */
-public
-async;
-goto(url: string)
-: Promise<void>
-{
-	await this.page.goto(url, {
-		waitUntil: "domcontentloaded",
-		timeout: 180000,
-	});
-}
 
 import { expect, type Locator, type Page } from "@playwright/test";
 import * as fs from "fs";
@@ -21,6 +8,16 @@ export class BasePage {
 
 	constructor(page: Page) {
 		this.page = page;
+	}
+
+	/**
+	 * Navigate to a URL with custom options (waitUntil: 'domcontentloaded', timeout: 180000)
+	 */
+	public async goto(url: string): Promise<void> {
+		await this.page.goto(url, {
+			waitUntil: "domcontentloaded",
+			timeout: 180000,
+		});
 	}
 
 	public async validateURL(expected: string | RegExp): Promise<void> {
