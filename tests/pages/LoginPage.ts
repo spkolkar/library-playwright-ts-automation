@@ -1,68 +1,73 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { log, LogType } from '../helpers/logger';
+import { expect, type Locator, type Page } from "@playwright/test";
+import { LogType, log } from "../helpers/logger";
 export class LoginPage {
-  readonly page: Page;
+	readonly page: Page;
 
-  // Locators - Header
-  readonly loginHeader: Locator;
+	// Locators - Header
+	readonly loginHeader: Locator;
 
-  //Locator - labels
-  readonly usernameLabel: Locator;
-  readonly passwordLabel: Locator;
+	//Locator - labels
+	readonly usernameLabel: Locator;
+	readonly passwordLabel: Locator;
 
-  //Locator - login button
-  readonly loginButton: Locator;
+	//Locator - login button
+	readonly loginButton: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
+	constructor(page: Page) {
+		this.page = page;
 
-    // Header
-    this.loginHeader = page.getByRole('heading', { name: 'Login' });
+		// Header
+		this.loginHeader = page.getByRole("heading", { name: "Login" });
 
-    // Labels
-    this.usernameLabel = page.locator('label[for="username"]');
-    this.passwordLabel = page.locator('label[for="password"]');
+		// Labels
+		this.usernameLabel = page.locator('label[for="username"]');
+		this.passwordLabel = page.locator('label[for="password"]');
 
-    // Button
-    this.loginButton = page.getByRole('button', { name: 'Submit Login' });
-    // this.loginButton = page.getByRole('button', { name: /log/i });
+		// Button
+		this.loginButton = page.getByRole("button", { name: "Submit Login" });
+		// this.loginButton = page.getByRole('button', { name: /log/i });
+	}
 
-  }
+	public async goto(baseUrl: string): Promise<void> {
+		//login page url should be baseUrl + /login
+		const loginUrl = `${baseUrl.replace(/\/$/, "")}/login`;
+		log(`Navigating to login URL: ${loginUrl}`, LogType.INFO);
+		await this.gotoWithOptions(loginUrl);
+	}
 
-  public async goto(baseUrl: string): Promise<void> {
+	private async gotoWithOptions(url: string): Promise<void> {
+		await this.page.goto(url, {
+			waitUntil: "domcontentloaded",
+			timeout: 180000,
+		});
+	}
 
-    //login page url should be baseUrl + /login
-    const loginUrl = `${baseUrl.replace(/\/$/, '')}/login`;
-    log(`Navigating to login URL: ${loginUrl}`, LogType.INFO);
-    await this.page.goto(loginUrl);
-  }
+	public async validateLoginHeader(expectedText: string): Promise<void> {
+		await expect(this.loginHeader).toHaveText(expectedText);
+	}
 
-  public async validateLoginHeader(expectedText: string): Promise<void> {
-    await expect(this.loginHeader).toHaveText(expectedText);
-  }
+	public async validateUsernameLabel(expectedText: string): Promise<void> {
+		await expect(this.usernameLabel).toHaveText(expectedText);
+	}
 
-  public async validateUsernameLabel(expectedText: string): Promise<void> {
-    await expect(this.usernameLabel).toHaveText(expectedText);
-  }
+	public async validatePasswordLabel(expectedText: string): Promise<void> {
+		await expect(this.passwordLabel).toHaveText(expectedText);
+	}
 
-  public async validatePasswordLabel(expectedText: string): Promise<void> {
-    await expect(this.passwordLabel).toHaveText(expectedText);
-  }
+	public async validateLoginButtonName(expectedText: string): Promise<void> {
+		const buttonText = await this.loginButton.innerText();
+		await expect(buttonText).toBe(expectedText);
+	}
 
-  public async validateLoginButtonName(expectedText: string): Promise<void> {
-    const buttonText = await this.loginButton.innerText();
-    await expect(buttonText).toBe(expectedText);
-  }
+	public async enterUsername(username: string): Promise<void> {
+		await this.usernameLabel.fill(username);
+	}
 
-  public async enterUsername(username: string): Promise<void> {
-    await this.usernameLabel.fill(username);
-  }
+	public async enterPassword(password: string): Promise<void> {
+		await this.passwordLabel.fill(password);
+	}
 
-  public async enterPassword(password: string): Promise<void> {
-    await this.passwordLabel.fill(password);
-  }
-
-  public async clickLogin(): Promise<void> {
-    await this.loginButton.click();
-  }
+	public async clickLogin(): Promise<void> {
+		await this.loginButton.click();
+	}
 }

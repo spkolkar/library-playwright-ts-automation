@@ -1,4 +1,3 @@
-
 // import {envConfig} from 'dotenv';
 // import { LogType } from '../../enums/LogType';
 // import { error, info, log } from 'node:console';
@@ -9,7 +8,7 @@
 //   info: 'ℹ️',
 //   error: '❌',
 //   warning: '⚠️',
-//   success: '✅',  
+//   success: '✅',
 //   timing: '⏱️',
 //   debug: '🐞',
 //   test: '🧪',
@@ -34,7 +33,7 @@
 //   TIMING: LogType.Timing,
 //   TEST: LogType.Test
 // };
-  
+
 // export function log(message: String, type: LogType) {
 //   if(LOG_LEVEL !== undefined && LOG_LEVEL < type){
 //     return; // Skip logging if the message type is below the configured log level
@@ -67,18 +66,18 @@
 //   }
 
 export enum LogType {
-  INFO = 1,
-  WARN = 2,
-  ERROR = 3
+	INFO = 1,
+	WARN = 2,
+	ERROR = 3,
 }
 
 const LOG_LEVEL = LogType.INFO;
 
 export function log(message: string, type: LogType): void {
-  if (LOG_LEVEL !== undefined && type < LOG_LEVEL) {
-    return;
-  }
+	if (LOG_LEVEL !== undefined && type < LOG_LEVEL) {
+		return;
+	}
 
-  const timestamp = new Date().toISOString();
-  console.log(`${timestamp} [${LogType[type]}] ${message}`);
+	const timestamp = new Date().toISOString();
+	console.log(`${timestamp} [${LogType[type]}] ${message}`);
 }
