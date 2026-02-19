@@ -1,3 +1,4 @@
+
 import test from "node:test";
 import type { Page } from "@playwright/test";
 import { testBooks } from "../helpers/testData";
@@ -14,7 +15,11 @@ export class BooksPageSteps {
 	 * Navigate to Books page
 	 */
 	public async navigateToBooksPage(): Promise<void> {
-		await this.booksPage.goto(process.env.BASE_URL!);
+		if (process.env.BASE_URL) {
+			await this.booksPage.goto(process.env.BASE_URL);
+		} else {
+			throw new Error("BASE_URL is not defined in environment variables");
+		}
 	}
 
 	public async openAddBookForm(): Promise<void> {
@@ -25,12 +30,12 @@ export class BooksPageSteps {
 	 * Add new book
 	 */
 	public async addBook(
-		title: string,
-		author: string,
-		genre: string,
-		isbn: string,
-		publicationDate: string,
-		price: string,
+		_title: string,
+		_author: string,
+		_genre: string,
+		_isbn: string,
+		_publicationDate: string,
+		_price: string,
 	): Promise<void> {
 		await this.booksPage.clickAddBook();
 		await this.booksPage.enterTitle(testBooks.validBook.title);
@@ -55,7 +60,15 @@ export class BooksPageSteps {
 		await this.booksPage.clickEditForBook(oldTitle);
 		await this.booksPage.validateHeader("Edit book details", 1);
 		await this.booksPage.takeScreenshot("BookSearchOpenedforEditScreen");
+		await this.booksPage.enterPublicationDate(
+			testBooks.updatedBook.publicationDate,
+		);
 		await this.booksPage.enterTitle(newTitle);
+		await this.booksPage.enterAuthor(testBooks.updatedBook.author);
+		await this.booksPage.selectGenre(testBooks.updatedBook.genre);
+		await this.booksPage.enterIsbn(testBooks.updatedBook.isbn);
+
+		await this.booksPage.updatePrice(testBooks.updatedBook.price);
 		await this.booksPage.takeScreenshot("BookEditedWithNewTitleScreen");
 		await this.booksPage.clickSave();
 		await this.booksPage.validateBookExists(newTitle);

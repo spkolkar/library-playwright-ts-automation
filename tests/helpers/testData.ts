@@ -20,10 +20,10 @@ export const testBooks = {
 	},
 	updatedBook: {
 		title: "AI genesis",
-		author: "Shivakumar",
-		year: "2022",
+		author: "ShivakumarKolkar",
+		publicationDate: "2023-02-10",
 		genre: "Fiction",
-		isbn: "1234567890",
+		isbn: "1234960890",
 		price: "30.99",
 	},
 };

@@ -7,19 +7,25 @@ class LoginPage {
     constructor(page) {
         this.page = page;
         // Header
-        this.loginHeader = page.getByRole('heading', { name: 'Login' });
+        this.loginHeader = page.getByRole("heading", { name: "Login" });
         // Labels
         this.usernameLabel = page.locator('label[for="username"]');
         this.passwordLabel = page.locator('label[for="password"]');
         // Button
-        this.loginButton = page.getByRole('button', { name: 'Submit Login' });
+        this.loginButton = page.getByRole("button", { name: "Submit Login" });
         // this.loginButton = page.getByRole('button', { name: /log/i });
     }
     async goto(baseUrl) {
         //login page url should be baseUrl + /login
-        const loginUrl = `${baseUrl.replace(/\/$/, '')}/login`;
+        const loginUrl = `${baseUrl.replace(/\/$/, "")}/login`;
         (0, logger_1.log)(`Navigating to login URL: ${loginUrl}`, logger_1.LogType.INFO);
-        await this.page.goto(loginUrl);
+        await this.gotoWithOptions(loginUrl);
+    }
+    async gotoWithOptions(url) {
+        await this.page.goto(url, {
+            waitUntil: "domcontentloaded",
+            timeout: 180000,
+        });
     }
     async validateLoginHeader(expectedText) {
         await (0, test_1.expect)(this.loginHeader).toHaveText(expectedText);

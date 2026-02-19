@@ -11,7 +11,7 @@ exports.log = log;
 //   info: 'ℹ️',
 //   error: '❌',
 //   warning: '⚠️',
-//   success: '✅',  
+//   success: '✅',
 //   timing: '⏱️',
 //   debug: '🐞',
 //   test: '🧪',

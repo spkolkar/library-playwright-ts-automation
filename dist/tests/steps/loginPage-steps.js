@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginPageSteps = void 0;
-const LoginPage_1 = require("../pages/LoginPage");
 const testData_1 = require("../helpers/testData");
+const LoginPage_1 = require("../pages/LoginPage");
 class LoginPageSteps {
     constructor(page) {
         this.loginPage = new LoginPage_1.LoginPage(page);
@@ -16,10 +16,10 @@ class LoginPageSteps {
         await this.loginPage.goto(process.env.BASE_URL);
     }
     async validateLoginPageUI() {
-        await this.loginPage.validateLoginHeader('Login');
-        await this.loginPage.validateUsernameLabel('Username');
-        await this.loginPage.validatePasswordLabel('Password');
-        await this.loginPage.validateLoginButtonName('Log In');
+        await this.loginPage.validateLoginHeader("Login");
+        await this.loginPage.validateUsernameLabel("Username");
+        await this.loginPage.validatePasswordLabel("Password");
+        await this.loginPage.validateLoginButtonName("Log In");
     }
     async loginWithCredentials(username, password) {
         await this.loginPage.enterUsername(username);

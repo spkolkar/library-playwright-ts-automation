@@ -34,13 +34,13 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.test = void 0;
-const steps = __importStar(require("../steps/index"));
 const test_1 = require("@playwright/test");
+const steps = __importStar(require("../steps/index"));
 exports.test = test_1.test.extend({
     loginPageSteps: async ({ page }, use) => {
         await use(new steps.LoginPageSteps(page));
     },
     booksPageSteps: async ({ page }, use) => {
         await use(new steps.BooksPageSteps(page));
-    }
+    },
 });

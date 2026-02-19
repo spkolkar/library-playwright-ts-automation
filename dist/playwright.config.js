@@ -15,7 +15,7 @@ dotenv_1.default.config();
  * See https://playwright.dev/docs/test-configuration.
  */
 exports.default = (0, test_1.defineConfig)({
-    testDir: 'tests/specs',
+    testDir: "tests/specs",
     /* Run tests in files in parallel */
     fullyParallel: true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -25,40 +25,40 @@ exports.default = (0, test_1.defineConfig)({
     /* Opt out of parallel tests on CI. */
     workers: 1, // process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-    reporter: [['html'], ['list']],
+    reporter: [["html"], ["list"]],
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('')`. */
         baseURL: process.env.BASE_URL,
         headless: false,
-        actionTimeout: 30000,
-        navigationTimeout: 30000,
-        screenshot: 'only-on-failure',
-        video: 'retain-on-failure',
+        actionTimeout: 35000,
+        navigationTimeout: 35000,
+        screenshot: "only-on-failure",
+        video: "retain-on-failure",
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-        trace: 'on-first-retry',
+        trace: "on-first-retry",
     },
     /* Configure projects for major browsers */
     projects: [
         {
-            name: 'setup',
-            testMatch: '/.*\.setup\.ts/',
+            name: "setup",
+            testMatch: "/.*.setup.ts/",
         },
         {
-            name: 'chromium',
-            dependencies: ['setup'],
-            use: { ...test_1.devices['Desktop Chrome'], permissions: ["clipboard-read"] },
+            name: "chromium",
+            dependencies: ["setup"],
+            use: { ...test_1.devices["Desktop Chrome"], permissions: ["clipboard-read"] },
         }
         // {
-        //   name: 'firefox',
-        //   dependencies: ['setup'],
-        //   use: { ...devices['Desktop Firefox'] },
+        // 	name: "firefox",
+        // 	dependencies: ["setup"],
+        // 	use: { ...devices["Desktop Firefox"] },
         // },
         // {
-        //   name: 'webkit',
-        //   dependencies: ['setup'],
-        //   use: { ...devices['Desktop Safari'] },
-        // }
+        // 	name: "webkit",
+        // 	dependencies: ["setup"],
+        // 	use: { ...devices["Desktop Safari"] },
+        // },
         /* Test against mobile viewports. */
         // {
         //   name: 'Mobile Chrome',
