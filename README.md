@@ -33,17 +33,36 @@ This keeps the tests readable and easy to maintain.
     • Node.js
 
 
+git clone <your-repo-url>
+npm install
+npx playwright install
+
 ⚙️ Installation
+
 Clone the repository:
 
 git clone <your-repo-url>
-cd book-management-tests
+cd library-playwright-ts-automation
+
+**Node.js Version:**
+This project requires **Node.js 18 or higher**. Use [nvm](https://github.com/nvm-sh/nvm) to manage Node versions:
+
+    nvm install 18
+    nvm use 18
+
+The required version is also specified in the `.nvmrc` file:
+
+    nvm use
+
 Install dependencies:
 
-npm install
+    npm install
+
 Install Playwright browsers:
 
-npx playwright install
+    npx playwright install
+
+If you see a message about Playwright requiring a newer Node.js version, make sure you are using Node 18+ (see above).
 
 ▶️ Running Tests
 Run all tests:
